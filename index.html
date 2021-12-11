@@ -4,8 +4,7 @@
 	<meta charset="utf-8">
 	<title></title>
 	<script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.5.1/jquery.min.js" type="application/javascript"></script>
-	<meta name="theme-color" content="#000000" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.6/clipboard.min.js" type="application/javascript"></script>
 </head>
 <body>
 	 <form id="form" enctype="multipart/form-data">
@@ -15,10 +14,13 @@
 
     <h2 id="upload-result"></h2>
     <div id="imgdiv"></div>
-
+    <h2 id="jg"></h2>
+    
 	<script>
-		  function upload(){
-            var form = new FormData(document.getElementById("form"))
+		new ClipboardJS('.btn');
+        function upload() {
+        	// body...
+        var form = new FormData(document.getElementById("form"))
             $.ajax({
                 url:"https://muddy-hall-e92a.giao111.workers.dev/upload",
                headers:{"accept-encoding": "gzip, deflate, br",
@@ -41,7 +43,8 @@
                  success:function(data){
                     if (data.res = "200") {
                         $("#upload-result").text("上传成功");
-                        $("#imgdiv").html("<img src=\"https://muddy-hall-e92a.giao111.workers.dev/"+data[0].src+"\"/>");
+                        $("#imgdiv").html("<input id='nn' value=\"https://muddy-hall-e92a.giao111.workers.dev"+data[0].src+"\"/>\
+                        	<button data-clipboard-target='#nn' class='btn' style='margin-top: 15px'>复制</button>");
                     }else if (data.res = "403") {
                         $("#upload-result").text("格式不对");
                     }else if (data.res = "404") {
