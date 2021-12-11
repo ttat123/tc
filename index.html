@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.5.1/jquery.min.js" type="application/javascript"></script>
+</head>
+<body>
+	 <form id="form" enctype="multipart/form-data">
+        <input type="file" name="file" multiple="multiple" />
+        <input type="button" onclick="upload()" value="上传"/>
+    </form>
+
+    <h2 id="upload-result"></h2>
+    <div id="imgdiv"></div>
+
+	<script>
+		  function upload(){
+            var form = new FormData(document.getElementById("form"))
+            $.ajax({
+                url:"https://muddy-hall-e92a.giao111.workers.dev/upload",
+               headers:{"accept-encoding": "gzip, deflate, br",
+"accept-language": "zh-CN,zh-TW;q=0.9,zh;q=0.8,en-US;q=0.7,en;q=0.6",
+"cache-control": "no-cache",
+"origin": "https://telegra.ph",
+"pragma": "no-cache",
+"referer": "https://telegra.ph/",
+"sec-ch-ua-mobile": "?0",
+"sec-ch-ua-platform": "Windows",
+"sec-fetch-dest": "empty",
+"sec-fetch-mode": "cors",
+"sec-fetch-site": "same-origin",
+"x-requested-with": "XMLHttpRequest"},
+                type:"POST",
+                data:form,
+                cache: false,
+                processData: false,
+                contentType: false,
+                 success:function(data){
+                    if (data.res = "200") {
+                        $("#upload-result").text("上传成功");
+                        $("#imgdiv").html("<img src=\"https://muddy-hall-e92a.giao111.workers.dev/"+data[0].src+"\"/>");
+                    }else if (data.res = "403") {
+                        $("#upload-result").text("格式不对");
+                    }else if (data.res = "404") {
+                        $("#upload-result").text("上传错误");
+                    }
+                    
+                },
+                error:function(data){
+                    alert("上传失败")
+                }
+            })
+        }
+	</script>
+</body>
+</html>
